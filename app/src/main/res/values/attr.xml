@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--    setViewShape(Enum) BALL\RECTANGLE  设置图形形状。
+    setViewColor(int):void设置图形颜色。
+    getViewShape():Enum获取View形状。
+    getViewColor():int获取view的颜色。
+    并且有使用该自定义View的相关代码 且 可以运行展示
+
+    在4的基础上实现在中间展示文字的自定义View(继承自View)，实现能够使用代码或者xml方式生成，向外暴露方法（需考虑默认值、以及入参错误问题）：
+    setTextSize(int)设置绘制文字大小。
+    setTextColor(int)设置绘制文字的颜色。
+    setText(string)设置需要绘制的文字。
+    getTextSize():int获取绘制文字大小。
+    getTextColor():int获取绘制文字颜色。
+    getText():string 获取设置的文字-->
+
+    <declare-styleable name="myView">
+        <attr name="myShape" format="enum">
+            <enum name="Circle" value="0"/>
+            <enum name="Rectangle" value="1"/>
+            <enum name="Square" value="2"/>
+        </attr>
+        <attr name="myViewColor" format="color"/>
+        <attr name="myTextColor" format="color"/>
+        <attr name="myTextSize" format="integer"/>
+        <attr name="myText" format="string"/>
+    </declare-styleable>
+    
+</resources>
