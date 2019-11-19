@@ -1,4 +1,4 @@
-package com.example.firstday.util;
+package com.example.firstday.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -7,6 +7,8 @@ import android.webkit.WebHistoryItem;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import com.example.firstday.util.IMyWeb;
 
 public class MyWebView extends WebView {
     private IMyWeb myWeb;

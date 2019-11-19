@@ -1,7 +1,6 @@
 package com.example.firstday.activity;
 
 import android.os.Bundle;
-import android.webkit.WebView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -9,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.firstday.R;
 import com.example.firstday.util.IMyWeb;
-import com.example.firstday.util.MyWebView;
+import com.example.firstday.view.MyWebView;
 
 public class WebActivity extends AppCompatActivity {
 
