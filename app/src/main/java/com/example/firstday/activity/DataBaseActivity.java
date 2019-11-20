@@ -70,7 +70,7 @@ public class DataBaseActivity extends AppCompatActivity implements View.OnClickL
 //                dataBaseUtil.queryBySqlSingle("")
                 break;
             case R.id.btn_table_update:
-                dataBaseUtil.updateDataBase();
+                dataBaseUtil.updateDataBase(2);
                 break;
         }
     }

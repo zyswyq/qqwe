@@ -24,93 +24,142 @@ public class DataBaseUtil {
     private Context context;
     private Cursor mCursor;
 
-    private String  DATABASE_NAME="TEST";
+    private String DATABASE_NAME = "wangcai_lottery.db";
 
-    public DataBaseUtil(Context context){
-        this.context=context;
+    public DataBaseUtil(Context context) {
+        this.context = context;
     }
 
-    public void createDatabase(){
-        mSQLiteOpenHelper =new MySqlHelper(context,DATABASE_NAME,null,1);
-    };
+    /**
+     * 创建数据库
+     */
+    public void createDatabase() {
+        mSQLiteOpenHelper = new MySqlHelper(context, DATABASE_NAME, null, 1);
+        mSQLiteOpenHelper.getWritableDatabase();
+    }
 
-    public void  updateDataBase(){
+
+    /**
+     * 更新数据库
+     *
+     * @param version 版本号
+     */
+    public void updateDataBase(int version) {
         mSQLiteOpenHelper.close();
-        mSQLiteOpenHelper =new MySqlHelper(context,DATABASE_NAME,null,2);
+        mSQLiteOpenHelper = new MySqlHelper(context, DATABASE_NAME, null, version);
+        mSQLiteOpenHelper.getWritableDatabase();
     }
 
-    public void createTable(String tableName , Map<String ,Object> setList,String primary){
-        StringBuilder sql=new StringBuilder();
-        sql.append("create table "+tableName+"{");
-        for ( Map.Entry<String, Object>  m: setList.entrySet()) {
-            if (primary.equals(m.getKey())){
+    /**
+     * 创建表
+     *
+     * @param tableName 表名
+     * @param setList   列名与类型
+     * @param primary   主键的列名
+     */
+    public void createTable(String tableName, Map<String, Object> setList, String primary) {
+        StringBuilder sql = new StringBuilder();
+        sql.append("create table ").append(tableName).append("{");
+        for (Map.Entry<String, Object> m : setList.entrySet()) {
+            if (primary.equals(m.getKey())) {
                 sql.append(m.getKey()).append(" INTEGER PRIMARY KEY AUTOINCREMENT,");
-            }else {
+            } else {
                 sql.append(m.getKey()).append(m.getValue()).append(",");
             }
         }
-        sql.deleteCharAt(sql.length()-1).append("}");
-        mSQLiteDatabase=mSQLiteOpenHelper.getWritableDatabase();
+        sql.deleteCharAt(sql.length() - 1).append("}");
+        mSQLiteDatabase = mSQLiteOpenHelper.getWritableDatabase();
         mSQLiteDatabase.execSQL(sql.toString());
         closeAll();
-    };
-
-    public boolean addData(String tableName,ContentValues data){
-        mSQLiteDatabase=mSQLiteOpenHelper.getWritableDatabase();
-        long i=mSQLiteDatabase.insert(tableName,null,data);
-        closeAll();
-        return i==1?true:false;
-    }
-    public boolean delData(String tableName,String causeBy){
-        mSQLiteDatabase=mSQLiteOpenHelper.getWritableDatabase();
-        long i=mSQLiteDatabase.delete(tableName,causeBy,null);
-        closeAll();
-        return i==1?true:false;
-    }
-    public boolean updateData(String tableName,String causeBy,ContentValues contentValues){
-        mSQLiteDatabase=mSQLiteOpenHelper.getWritableDatabase();
-        int i= (int) mSQLiteDatabase.update(tableName,contentValues,causeBy,null);
-        closeAll();
-        return i==1?true:false;
     }
 
+    ;
+
+    /**
+     * 新增数据
+     *
+     * @param tableName 表名
+     * @param data      新增的数据
+     * @return 是否成功
+     */
+    public boolean addData(String tableName, ContentValues data) {
+        mSQLiteDatabase = mSQLiteOpenHelper.getWritableDatabase();
+        long i = mSQLiteDatabase.insert(tableName, null, data);
+        closeAll();
+        return i == 1;
+    }
+
+    /**
+     * 删除数据
+     *
+     * @param tableName 表名
+     * @param causeBy   删除条件
+     * @return 是否成功
+     */
+    public boolean delData(String tableName, String causeBy) {
+        mSQLiteDatabase = mSQLiteOpenHelper.getWritableDatabase();
+        long i = mSQLiteDatabase.delete(tableName, causeBy, null);
+        closeAll();
+        return i == 1;
+    }
+
+    /**
+     * 更新数据
+     *
+     * @param tableName     表名
+     * @param causeBy       更新条件
+     * @param contentValues 更新值
+     * @return 是否成功
+     */
+    public boolean updateData(String tableName, String causeBy, ContentValues contentValues) {
+        mSQLiteDatabase = mSQLiteOpenHelper.getWritableDatabase();
+        int i = mSQLiteDatabase.update(tableName, contentValues, causeBy, null);
+        closeAll();
+        return i >= 1;
+    }
+
+    /**
+     * 查询单条语句
+     *
+     * @param sql    查询sql
+     * @param params 查询条件值
+     * @param indexs 查询的列名
+     * @return 查询到的单条数据, 没有为null
+     */
     public Map queryBySqlSingle(String sql, String[] params, String[] indexs) {
         mSQLiteDatabase = mSQLiteOpenHelper.getWritableDatabase();
         mCursor = mSQLiteDatabase.rawQuery(sql, params);
         List<Map> list = new ArrayList<>();
         while (mCursor.moveToNext()) {
-            Map<String, Object> map = new HashMap<String, Object>();
-            for (int i = 0; i < indexs.length; i++) {
+            Map<String, Object> map = new HashMap<>();
+            for (String s : indexs) {
                 //通过列名得到下标
-                int index = mCursor.getColumnIndex(indexs[i]);
+                int index = mCursor.getColumnIndex(s);
                 //通过下标得到查询内容
                 String result = mCursor.getString(index);
-                if ("null".equals(result)){
-                    result="";
+                if ("null".equals(result)) {
+                    result = "";
                 }
-                map.put(indexs[i], result);
+                map.put(s, result);
             }
             list.add(map);
         }
         closeAll();
-        return list!=null&&list.size()>0?list.get(0):null;
+        return list.size() > 0 ? list.get(0) : null;
     }
 
     /**
-     * 关闭全部
+     * 关闭全部流
      */
-    public void closeAll() {
+    private void closeAll() {
         if (mCursor != null && !mCursor.isClosed()) {
             mCursor.close();
-        } else {
         }
         if (mSQLiteOpenHelper != null) {
             mSQLiteOpenHelper.close();
-        } else {
         }
         if (mSQLiteDatabase != null && mSQLiteDatabase.isOpen()) {
             mSQLiteDatabase.close();
-        } else {
         }
     }
 }

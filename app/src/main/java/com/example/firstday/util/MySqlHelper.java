@@ -13,7 +13,10 @@ public class MySqlHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
+        String sql = "create table select_ball_table(lottery_id integer primary key autoincrement," +
+                "lottery_key varchar(20)," +
+                "ball char)";
+        db.execSQL(sql);//执行sql语句
     }
 
     @Override
@@ -21,8 +24,8 @@ public class MySqlHelper extends SQLiteOpenHelper {
         Log.e("", "onUpgrade: "+newVersion);
         Log.e("", "onUpgrade: " );
         if (db != null) {
+        }else {
             db=this.getWritableDatabase();
-
         }
     }
 }
