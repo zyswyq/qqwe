@@ -8,6 +8,9 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+/**
+ * sadsadas
+ */
 public class MyWebView extends WebView {
     private IMyWeb myWeb;
 
