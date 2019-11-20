@@ -33,12 +33,6 @@ public class DataBaseUtil {
     }
 
 
-//    public void createDatabase() {
-//
-//        closeAll();
-//    }
-
-
     /**
      * 更新数据库
      *

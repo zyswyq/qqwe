@@ -1,9 +1,8 @@
 package com.example.firstday.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.webkit.WebBackForwardList;
-import android.webkit.WebHistoryItem;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -32,6 +31,7 @@ public class MyWebView extends WebView {
     }
 
 
+    @SuppressLint("SetJavaScriptEnabled")
     public WebSettings initDefaultWebSettings() {
         WebSettings webSettings = null;
         if (!isInEditMode()) {
@@ -49,14 +49,18 @@ public class MyWebView extends WebView {
     class WebChromeClient extends android.webkit.WebChromeClient {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
-           myWeb.getProgress(newProgress);
+            if (myWeb != null) {
+                myWeb.getProgress(newProgress);
+            }
             super.onProgressChanged(view, newProgress);
         }
 
         @Override
         public void onReceivedTitle(WebView view, String title) {
             super.onReceivedTitle(view, title);
-            myWeb.getTitle(title);
+            if (myWeb != null) {
+                myWeb.getTitle(title);
+            }
         }
     }
 
@@ -76,7 +80,7 @@ public class MyWebView extends WebView {
         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
             super.onReceivedError(view, errorCode, description, failingUrl);
             if (myWeb != null)
-                myWeb.errorLoad(errorCode,description);
+                myWeb.errorLoad(errorCode, description);
         }
     }
 

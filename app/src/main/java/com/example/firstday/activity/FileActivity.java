@@ -19,12 +19,14 @@ import com.example.firstday.MyApplication;
 import com.example.firstday.R;
 import com.example.firstday.util.FileUtil;
 
+import java.io.File;
 import java.io.IOException;
 
 public class FileActivity extends AppCompatActivity implements View.OnClickListener {
     private String fileName="text.txt";
     private String dicName="/textDic";
-    private String path= MyApplication.context.getFilesDir().getPath();
+//    private String path= MyApplication.context.getFilesDir().getPath();
+    private String path= Environment.getExternalStorageDirectory().getPath() + File.separator;
     private Button createDic,createFile,readFile,writeFile,delFile;
     private TextView showTv;
     private EditText editText;
@@ -86,18 +88,10 @@ public class FileActivity extends AppCompatActivity implements View.OnClickListe
                 FileUtil.deleteDirectory(path+"/"+fileName);
                 break;
             case R.id.btn_read:
-                try {
-                    showTv.setText(FileUtil.readFile(path+"/"+fileName));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                showTv.setText(FileUtil.readFile(path+"/"+fileName));
                 break;
             case R.id.btn_write:
-                try {
-                    showTv.setText(FileUtil.writeInFile(path+"/"+fileName,editText.getText().toString())+"");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                showTv.setText(FileUtil.writeInFile(path+"/"+fileName,editText.getText().toString())+"");
                 break;
         }
     }

@@ -1,21 +1,20 @@
 package com.example.firstday.view;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.text.Layout;
-import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.example.firstday.R;
 
-import static com.example.firstday.view.MyView.Shape.*;
+import static com.example.firstday.view.MyView.Shape.Circle;
+import static com.example.firstday.view.MyView.Shape.Rectangle;
+import static com.example.firstday.view.MyView.Shape.Square;
 
 
 public class MyView extends View {
@@ -109,19 +108,19 @@ public class MyView extends View {
         TypedArray array = context.getTheme().obtainStyledAttributes(attrs, R.styleable.myView, defStyleAttr, 0);
         switch (array.getInt(R.styleable.myView_myShape, 0)) {
             case 0:
-                myShape=Circle;
+                myShape = Circle;
                 break;
             case 1:
-                myShape=Rectangle;
+                myShape = Rectangle;
                 break;
             case 2:
-                myShape= Square;
+                myShape = Square;
                 break;
         }
-        myTextSize=array.getInt(R.styleable.myView_myTextSize,myTextSize);
-        myTextColor=array.getInt(R.styleable.myView_myTextColor,myTextColor);
-        myTextStr=array.getString(R.styleable.myView_myText);
-        myViewColor=array.getInt(R.styleable.myView_myViewColor,myViewColor);
+        myTextSize = array.getInt(R.styleable.myView_myTextSize, myTextSize);
+        myTextColor = array.getInt(R.styleable.myView_myTextColor, myTextColor);
+        myTextStr = array.getString(R.styleable.myView_myText);
+        myViewColor = array.getInt(R.styleable.myView_myViewColor, myViewColor);
         array.recycle();
         initPaint();
     }
@@ -132,11 +131,11 @@ public class MyView extends View {
         if (Circle.equals(myShape)) {
             canvas.drawCircle(width / 2, height / 2, Math.min(height, width) / 2, viewP);
         } else if (Rectangle.equals(myShape)) {
-            Rect rect = new Rect(0,0,width,height);
+            Rect rect = new Rect(0, 0, width, height);
             canvas.drawRect(rect, viewP);
         } else if (Square.equals(myShape)) {
 
-            Rect rect = new Rect(width/2-Math.min(width,height)/2,height/2-Math.min(width,height)/2,width/2+Math.min(width,height)/2,height/2+Math.min(width,height)/2);
+            Rect rect = new Rect(width / 2 - Math.min(width, height) / 2, height / 2 - Math.min(width, height) / 2, width / 2 + Math.min(width, height) / 2, height / 2 + Math.min(width, height) / 2);
             canvas.drawRect(rect, viewP);
         }
        /* @SuppressLint("DrawAllocation") StaticLayout myStaticLayout = new StaticLayout(myTextStr,  textP, canvas.getWidth(), Layout.Alignment.ALIGN_CENTER, 1.0f, 0.0f, false);
@@ -144,11 +143,11 @@ public class MyView extends View {
 
 //        textP.breakText(myTextStr, true, width, null);
         //Text折行先没做
-        float textWidtn=textP.measureText(myTextStr);
-        if (textWidtn>width){
-            canvas.drawText(myTextStr, 0 , height / 2 + myTextSize / 2, textP);
-        }else {
-            canvas.drawText(myTextStr, width/2-textWidtn/2 , height / 2 + myTextSize / 2, textP);
+        float textWidtn = textP.measureText(myTextStr);
+        if (textWidtn > width) {
+            canvas.drawText(myTextStr, 0, height / 2 + myTextSize / 2, textP);
+        } else {
+            canvas.drawText(myTextStr, width / 2 - textWidtn / 2, height / 2 + myTextSize / 2, textP);
         }
 
     }

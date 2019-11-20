@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
         myView=findViewById(R.id.myView);
         myView.setMyTextStr("代码中修改");
-        myView.setMyShape(MyView.Shape.Circle);
+        myView.setMyShape(MyView.Shape.Square);
         myView.setMyTextSize(35);
         myView.setMyViewColor(R.color.colorAccent);
     }
