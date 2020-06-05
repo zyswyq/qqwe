@@ -77,22 +77,17 @@ public class FileActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         showTv.setText("");
-        switch (v.getId()) {
-            case R.id.btn_create_dic:
-                showTv.setText(FileUtil.createDirectory(path+dicName)+"");
-                break;
-            case R.id.btn_create_file:
-                showTv.setText( FileUtil.createFile(path,fileName)+"");
-                break;
-            case R.id.btn_delete:
-                FileUtil.deleteDirectory(path+"/"+fileName);
-                break;
-            case R.id.btn_read:
-                showTv.setText(FileUtil.readFile(path+"/"+fileName));
-                break;
-            case R.id.btn_write:
-                showTv.setText(FileUtil.writeInFile(path+"/"+fileName,editText.getText().toString())+"");
-                break;
+        int id = v.getId();
+        if (id == R.id.btn_create_dic) {
+            showTv.setText(FileUtil.createDirectory(path + dicName) + "");
+        } else if (id == R.id.btn_create_file) {
+            showTv.setText(FileUtil.createFile(path, fileName) + "");
+        } else if (id == R.id.btn_delete) {
+            FileUtil.deleteDirectory(path + "/" + fileName);
+        } else if (id == R.id.btn_read) {
+            showTv.setText(FileUtil.readFile(path + "/" + fileName));
+        } else if (id == R.id.btn_write) {
+            showTv.setText(FileUtil.writeInFile(path + "/" + fileName, editText.getText().toString()) + "");
         }
     }
 }

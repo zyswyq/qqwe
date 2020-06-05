@@ -59,44 +59,37 @@ public class DataBaseActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         showTv.setText("");
-        switch (v.getId()) {
-//            case R.id.btn_create_database:
+        int id = v.getId();//            case R.id.btn_create_database:
 //                dataBaseUtil=new DataBaseUtil();
 //                break;
-            case R.id.btn_create_table:
-                Map map=new HashMap();
-                map.put("lottery_id","integer");
-                map.put("lottery_key","varchar(20)");
-                map.put("ball","char");
-                dataBaseUtil.createTable("select_ball_table",map,"lottery_id");
-                break;
-            case R.id.btn_add:
-                ContentValues contentValues=new ContentValues();
-                contentValues.put("lottery_key","这是key");
-                contentValues.put("ball","这是ball");
-                showTv.setText(dataBaseUtil.addData("select_ball_table",contentValues)+"");
-                break;
-            case R.id.btn_del:
-                showTv.setText(dataBaseUtil.delData("select_ball_table"," lottery_id= 1")+"");
-                break;
-            case R.id.btn_update:
-                ContentValues contentValues1=new ContentValues();
-                contentValues1.put("lottery_key","这是更新的key");
-                contentValues1.put("ball","这是更新的ball");
-                showTv.setText(dataBaseUtil.updateData("select_ball_table","",contentValues1)+"");
-                break;
-            case R.id.btn_query:
-                String sql="select * from select_ball_table";
-                if (!isUpdated){
-                    showTv.setText(dataBaseUtil.queryBySqlSingle(sql,new String[]{},new String[]{"lottery_id","lottery_key","ball"}).toString()+"");
-                }else {
-                    showTv.setText(dataBaseUtil.queryBySqlSingle(sql,new String[]{},new String[]{"lottery_id","lottery_key","ball","name"}).toString()+"");
-                }
-                break;
-            case R.id.btn_table_update:
-                dataBaseUtil.updateDataBase(2);
-                isUpdated=true;
-                break;
+        if (id == R.id.btn_create_table) {
+            Map map = new HashMap();
+            map.put("lottery_id", "integer");
+            map.put("lottery_key", "varchar(20)");
+            map.put("ball", "char");
+            dataBaseUtil.createTable("select_ball_table", map, "lottery_id");
+        } else if (id == R.id.btn_add) {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("lottery_key", "这是key");
+            contentValues.put("ball", "这是ball");
+            showTv.setText(dataBaseUtil.addData("select_ball_table", contentValues) + "");
+        } else if (id == R.id.btn_del) {
+            showTv.setText(dataBaseUtil.delData("select_ball_table", " lottery_id= 1") + "");
+        } else if (id == R.id.btn_update) {
+            ContentValues contentValues1 = new ContentValues();
+            contentValues1.put("lottery_key", "这是更新的key");
+            contentValues1.put("ball", "这是更新的ball");
+            showTv.setText(dataBaseUtil.updateData("select_ball_table", "", contentValues1) + "");
+        } else if (id == R.id.btn_query) {
+            String sql = "select * from select_ball_table";
+            if (!isUpdated) {
+                showTv.setText(dataBaseUtil.queryBySqlSingle(sql, new String[]{}, new String[]{"lottery_id", "lottery_key", "ball"}).toString() + "");
+            } else {
+                showTv.setText(dataBaseUtil.queryBySqlSingle(sql, new String[]{}, new String[]{"lottery_id", "lottery_key", "ball", "name"}).toString() + "");
+            }
+        } else if (id == R.id.btn_table_update) {
+            dataBaseUtil.updateDataBase(2);
+            isUpdated = true;
         }
     }
 }
